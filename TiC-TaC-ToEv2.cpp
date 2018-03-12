@@ -1,6 +1,7 @@
 // Hello Guys this is me first attempt in making a working game TiC-TaC-ToE
 #include<iostream>
-#include<string>
+#include<windows.h>
+#include<climits>
 using namespace std;
 //declaration of various funtions
 void print_board(string board[3][3]);// to pass the matrix we need to specify the size of the matrix but in case of linear array it was irrelevent!
@@ -10,12 +11,12 @@ void p2(string board[3][3]);//player Y
 int check_board(string board[3][3]);//this function checks the board
 int main()
 {
-    char input_from_user;
+    string input_from_user;
     while (1)//it was done to create an infinite loop
     {
         cout<<"Do you wish to Play TiC-TaC-ToE?\n(Y/N)\n";
         cin>>input_from_user;
-        if (input_from_user == 'Y' || input_from_user == 'y')
+        if (input_from_user == "Y" || input_from_user == "y")
         {
             string board[3][3] = {{"1,1","1,2","1,3"},{"2,1","2,2","2,3"},{"3,1","3,2","3,3"}};//the declaration is done here so that the matrix board gets reinitialised by these values after a game
             play_game(board);
@@ -46,7 +47,6 @@ void play_game(string board[3][3])
     while (counter<=9)
     {
         p1(board);//calling the player X to make a move
-        print_board(board);
         val=check_board(board);//check board needs to be performed after every move so that as soon as a player wins the game ends right there
         if (val == 1)
         {
@@ -55,9 +55,8 @@ void play_game(string board[3][3])
         }
         counter+=1;//keeping the count of the moves
         if (counter<9)//we dont want this player to play after the 9th move because there willl be no space on the grind and will raise an error
-        {
+{
         p2(board);
-        print_board(board);
         val=check_board(board);
         if (val == 1)
             {
@@ -78,7 +77,14 @@ void p1(string board[3][3])
     cout<<"Its Your Turn To Play :X \n enter Row,Col\n";
     int r,c;
     cin>>r>>c;
-
+while (cin.fail())
+{
+    cin.clear();
+    cin.ignore(INT_MAX,'\n');
+    cout<<"You can enter only numbers my friend"<<endl;
+    cout<<"Enter Row,Col"<<endl;
+    cin>>r>>c;
+}
     if ((r>=1 && r<=3) && (c>=1 && c<=3))//keeps track of the entered value so that it doesnt exceed the range of board
     {
             if (board[r-1][c-1] == "X" || board[r-1][c-1] == "O")//doesnt allow the player to go to the place where X or O is present
@@ -96,13 +102,22 @@ void p1(string board[3][3])
        cout<<"The entered number is out of the Range of Board please try again.\n";
             p1(board);
     }
+    system("cls");
+    print_board(board);
 }
 void p2(string board[3][3])
 {
     cout<<"Its Your Turn To Play :O \n enter Row,Col\n";
     int r,c;
     cin>>r>>c;
-
+while (cin.fail())
+{
+    cin.clear();
+    cin.ignore(INT_MAX,'\n');
+    cout<<"You can enter only numbers my friend"<<endl;
+    cout<<"Enter Row,Col\n"<<endl;
+    cin>>r>>c;
+}
     if ((r>=1 && r<=3) && (c>=1 && c<=3))
     {
             if (board[r-1][c-1] == " X " || board[r-1][c-1] == " O ")
@@ -120,6 +135,8 @@ void p2(string board[3][3])
        cout<<"The entered number is out of the Range of Board please try again.\n";
             p2(board);
     }
+    system("cls");
+    print_board(board);
 }
 int check_board(string board[3][3])
 {
