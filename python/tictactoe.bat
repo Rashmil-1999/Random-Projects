@@ -1,1 +1,0 @@
-@py.exe C:\my projects\tictactoe.py %*
